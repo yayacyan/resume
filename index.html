@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuo Yuwen — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17262c; --teal:#1f5d6b; --teal-deep:#123e48;
+  --paper:#fbfcfc; --line:#dde6e8; --muted:#566a70; --tint:#eef4f5;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.pane[data-lang="ja"]{font-family:"IBM Plex Sans","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif}
+.pane[data-lang="zh"]{font-family:"IBM Plex Sans","PingFang TC","Hiragino Sans TC","Microsoft JhengHei","Noto Sans TC",sans-serif}
+
+/* top bar */
+.topbar{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; padding:.7rem clamp(1rem,4vw,2rem);
+  background:rgba(251,252,252,.86); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.brand{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--muted); text-transform:uppercase}
+.lang-toggle{display:flex; gap:.25rem}
+.lang-btn{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.04em;
+  padding:.32rem .6rem; border:1px solid var(--line); border-radius:999px;
+  background:transparent; color:var(--muted); cursor:pointer;
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.lang-btn:hover{color:var(--teal); border-color:var(--teal)}
+.lang-btn.is-active{background:var(--teal); color:#fff; border-color:var(--teal)}
+.lang-btn:focus-visible{outline:2px solid var(--teal-deep); outline-offset:2px}
+
+/* page */
+.sheet{max-width:780px; margin:0 auto; padding:clamp(1.6rem,5vw,3.4rem) clamp(1.2rem,5vw,2.6rem) 4rem}
+.pane{animation:rise .38s ease both}
+@keyframes rise{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+/* hero */
+.hero{margin-bottom:1.6rem}
+.name{
+  font-size:clamp(2.1rem,6vw,2.9rem); font-weight:700; line-height:1.05;
+  letter-spacing:-.01em; margin:0 0 .5rem;
+}
+.name-sub{
+  display:block; font-family:var(--mono); font-weight:500;
+  font-size:.8rem; letter-spacing:.06em; color:var(--muted);
+  margin-top:.55rem;
+}
+.tagline{color:var(--teal); font-weight:600; font-size:1.02rem; margin:.2rem 0 .9rem}
+.meta{font-size:.86rem; color:var(--muted); margin:0; line-height:1.9}
+.meta .dot{margin:0 .5rem; color:var(--line)}
+.meta-link{color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line); transition:color .15s,border-color .15s}
+.meta-link:hover{color:var(--teal); border-color:var(--teal)}
+.meta-link:focus-visible{outline:2px solid var(--teal-deep); outline-offset:2px}
+
+/* blocks */
+.block{padding-top:1.5rem; margin-top:1.5rem; border-top:1px solid var(--line)}
+.summary-block{border-top:none; padding-top:.3rem; margin-top:.3rem}
+.eyebrow{
+  font-family:var(--mono); font-weight:600; font-size:.72rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--teal);
+  margin:0 0 .85rem;
+}
+.pane[data-lang="ja"] .eyebrow,.pane[data-lang="zh"] .eyebrow{letter-spacing:.22em; text-transform:none; font-size:.82rem}
+.summary{margin:0; color:#2a3a40; font-size:.98rem}
+
+.bullets{list-style:none; margin:0; padding:0}
+.bullets li{position:relative; padding-left:1.15rem; margin-bottom:.5rem; font-size:.94rem; color:#2a3a40}
+.bullets li::before{content:""; position:absolute; left:0; top:.62em; width:6px; height:6px; border:1.5px solid var(--teal); border-radius:50%}
+
+/* roles */
+.role{margin-bottom:1.15rem}
+.role:last-child{margin-bottom:0}
+.role-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:.1rem .6rem; margin-bottom:.4rem}
+.role-title{font-weight:700; font-size:1rem}
+.role-org{color:var(--muted); font-size:.92rem}
+.role-dates{margin-left:auto; font-family:var(--mono); font-size:.74rem; letter-spacing:.03em; color:var(--muted); white-space:nowrap}
+
+/* mobile */
+@media (max-width:520px){
+  .role-dates{margin-left:0; width:100%; order:3}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pane{animation:none}
+  *{scroll-behavior:auto}
+}
+
+/* print → clean single-language PDF of whatever is on screen */
+@media print{
+  .topbar{display:none}
+  body{background:#fff}
+  .sheet{max-width:none; padding:0 .2in}
+  .pane{animation:none}
+  .block{break-inside:avoid}
+  .role{break-inside:avoid}
+  a{color:inherit; border:none}
+}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <span class="brand">郭毓雯 · Kuo Yuwen</span>
+    <nav class="lang-toggle" aria-label="Language"><button class="lang-btn is-active" data-set-lang="en" aria-pressed="true">EN</button><button class="lang-btn" data-set-lang="ja" aria-pressed="false">日本語</button><button class="lang-btn" data-set-lang="zh" aria-pressed="false">繁中</button></nav>
+  </div>
+  <main class="sheet">
+    
+    <article class="pane is-active" data-lang="en" lang="en">
+      <header class="hero">
+        <h1 class="name">Kuo Yuwen<span class="name-sub">郭毓雯 · やや</span></h1>
+        <p class="tagline">Japanese ⇄ Chinese Translator &amp; Interpreter — Manga / Game Localization</p>
+        <p class="meta"><span class="meta-item">Kumamoto, Japan</span><span class="dot" aria-hidden="true">·</span><a class="meta-link" href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a></p>
+      </header>
+      <section class="block summary-block">
+        <h2 class="eyebrow">Profile</h2>
+        <p class="summary">Trilingual translator and interpreter with 6+ years of professional experience in Japanese–Chinese translation and on-site interpretation across technical (semiconductor, construction) and creative (manga, visual novel, game) fields. Native Chinese (Traditional &amp; Simplified), JLPT N1 Japanese, working English. Available for freelance translation, localization, and interpretation.</p>
+      </section>
+      
+      <section class="block">
+        <h2 class="eyebrow">Languages</h2>
+        <ul class="bullets"><li>Chinese — Native (Traditional &amp; Simplified)</li><li>Japanese — JLPT N1 (full professional proficiency)</li><li>English — Working proficiency</li><li>Pairs: JP → Traditional / Simplified Chinese · JP ⇄ ZH consecutive interpretation</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">Core Skills</h2>
+        <ul class="bullets"><li>Localization — manga, visual novels, MMORPG / game text, voice &amp; dialogue script proofreading</li><li>Interpretation — consecutive interpreting for semiconductor &amp; construction clients (factory, site, meeting)</li><li>CAT &amp; tools — memoQ, collaborative platforms (Minna de Honyaku), manga OCR &amp; on-image typesetting</li><li>Quality — terminology consistency, register/tone matching, mature-content handling, NDA compliance</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">Experience</h2>
+        
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">Freelance Translator &amp; Interpreter</span>
+            <span class="role-org">Japan / Remote</span>
+            <span class="role-dates">2014 – Present</span>
+          </div>
+          <ul class="bullets"><li>Japanese → Chinese (Traditional &amp; Simplified) translation and localization for manga, visual novel, and game clients.</li><li>Consecutive interpretation for semiconductor and construction clients on a project basis.</li><li>Build and maintain per-title glossaries and style guides to keep naming consistent across long-running series.</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">IT Consultant</span>
+            <span class="role-org">BlueMeme Inc., Kumamoto</span>
+            <span class="role-dates">Jun 2026 – Present</span>
+          </div>
+          <ul class="bullets"><li>IT consulting in a low-code / rapid application development environment; bridge technical and business stakeholders.</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">On-site Interpreter &amp; Translator — Construction</span>
+            <span class="role-org">Daiwa House · Shimizu Corporation · Taisei Corporation (Taiwan)</span>
+            <span class="role-dates">2017 – 2023</span>
+          </div>
+          <ul class="bullets"><li>Interpreted and translated for large-scale construction projects across three Japanese general contractors in Taiwan.</li><li>Handled technical documentation, on-site meetings, and coordination between Japanese and Taiwanese teams.</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">Additional Interpretation Engagements</span>
+            <span class="role-org">JASM · 豊工務店 · JUcan</span>
+            <span class="role-dates">various</span>
+          </div>
+          <ul class="bullets"><li>On-site / project interpretation and language support for manufacturing and construction clients.</li></ul>
+        </div>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">Selected Localization Credits</h2>
+        <ul class="bullets"><li>Manga localization — JES Corporation — JP → Simplified Chinese — 4+ ongoing titles</li><li>Visual novel — “Maid for Loving You” — JP → Traditional Chinese (mature / 18+ title)</li><li>MMORPG localization — JP → Chinese (under NDA)</li><li>Voice-acting / dialogue script proofreading — JP (under NDA)</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">Also</h2>
+        <ul class="bullets"><li>Online Japanese Instructor — Preply — conversation to JLPT N1 support</li><li>Bilingual content creator — articles on foreign-worker experience, labor topics, Taiwan–Japan culture</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">Education &amp; Certifications</h2>
+        <ul class="bullets"><li>B.A. in Applied Japanese (Translation specialization) — Southern Taiwan University of Science and Technology, 2012</li><li>Japanese Language Program Certificate — Waseda University</li><li>JLPT N1 (highest level)</li></ul>
+      </section>
+    </article>
+    <article class="pane" data-lang="ja" lang="ja" hidden>
+      <header class="hero">
+        <h1 class="name">郭 毓雯<span class="name-sub">やや / Kuo Yuwen</span></h1>
+        <p class="tagline">日中翻訳・通訳 — マンガ・ゲームローカライズ</p>
+        <p class="meta"><span class="meta-item">熊本県</span><span class="dot" aria-hidden="true">·</span><a class="meta-link" href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a></p>
+      </header>
+      <section class="block summary-block">
+        <h2 class="eyebrow">職務要約</h2>
+        <p class="summary">日本語・中国語（繁体字／簡体字）・英語のトリリンガル翻訳者・通訳者。半導体・建設などの技術分野と、マンガ・ノベルゲームなどのクリエイティブ分野の双方で、6年以上の日中翻訳・通訳の実務経験を持つ。中国語ネイティブ、日本語JLPT N1、英語は実務レベル。翻訳・ローカライズ・通訳の業務委託を承ります。</p>
+      </section>
+      
+      <section class="block">
+        <h2 class="eyebrow">語学力</h2>
+        <ul class="bullets"><li>中国語 — ネイティブ（繁体字・簡体字）</li><li>日本語 — JLPT N1（ビジネスレベル）</li><li>英語 — 実務レベル</li><li>翻訳方向：日本語 → 繁体字／簡体字中国語 · 日中逐次通訳</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">スキル</h2>
+        <ul class="bullets"><li>ローカライズ — マンガ、ノベルゲーム、MMORPG等のゲームテキスト、ボイス台本・セリフ校正</li><li>通訳 — 半導体・建設クライアント向けの逐次通訳（工場・現場・会議）</li><li>CAT・ツール — memoQ、共同翻訳（みんなで翻訳）、マンガOCR・写植</li><li>品質管理 — 用語統一、文体・トーン調整、成人向けコンテンツ対応、NDA遵守</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">職務経歴</h2>
+        
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">フリーランス翻訳者・通訳者</span>
+            <span class="role-org">日本／リモート</span>
+            <span class="role-dates">2014年 – 現在</span>
+          </div>
+          <ul class="bullets"><li>マンガ・ノベルゲーム・ゲーム案件で日本語 → 中国語（繁体字・簡体字）の翻訳・ローカライズを提供。</li><li>半導体・建設クライアント向けの逐次通訳をプロジェクト単位で担当。</li><li>長期連載作品の用語集・スタイルガイドを整備し、訳語の一貫性を確保。</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">ITコンサルタント</span>
+            <span class="role-org">株式会社BlueMeme（熊本）</span>
+            <span class="role-dates">2026年6月 – 現在</span>
+          </div>
+          <ul class="bullets"><li>ローコード／高速開発環境でのITコンサルティング。技術と業務の橋渡しを担当。</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">建設現場通訳・翻訳</span>
+            <span class="role-org">大和ハウス・清水建設・大成建設（台湾）</span>
+            <span class="role-dates">2017年 – 2023年</span>
+          </div>
+          <ul class="bullets"><li>台湾の日系ゼネコン3社の大型建設プロジェクトで通訳・翻訳を担当。</li><li>技術文書、現場会議、日台チーム間の調整業務に対応。</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">通訳業務（その他）</span>
+            <span class="role-org">JASM · 豊工務店 · JUcan</span>
+            <span class="role-dates">随時</span>
+          </div>
+          <ul class="bullets"><li>製造・建設クライアント向けの現場／プロジェクト通訳および言語サポート。</li></ul>
+        </div>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">主なローカライズ実績</h2>
+        <ul class="bullets"><li>マンガ・ローカライズ — JES Corporation — 日本語 → 簡体字中国語 — 連載4作品以上</li><li>ノベルゲーム —「Maid for Loving You」— 日本語 → 繁体字中国語（成人向け作品）</li><li>MMORPGローカライズ — 日本語 → 中国語（NDA）</li><li>ボイス台本・セリフ校正 — 日本語（NDA）</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">その他</h2>
+        <ul class="bullets"><li>オンライン日本語講師 — Preply — 会話からJLPT N1まで指導</li><li>バイリンガル・コンテンツ制作 — 外国人労働者・労働問題・台日文化比較などの記事</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">学歴・資格</h2>
+        <ul class="bullets"><li>応用日本語学科（翻訳専攻）学士 — 南台科技大学、2012年</li><li>早稲田大学 日本語教育プログラム 修了証</li><li>日本語能力試験 JLPT N1 合格</li></ul>
+      </section>
+    </article>
+    <article class="pane" data-lang="zh" lang="zh" hidden>
+      <header class="hero">
+        <h1 class="name">郭毓雯<span class="name-sub">Kuo Yuwen · やや</span></h1>
+        <p class="tagline">日中翻譯・口譯 — 漫畫・遊戲在地化</p>
+        <p class="meta"><span class="meta-item">日本熊本縣</span><span class="dot" aria-hidden="true">·</span><a class="meta-link" href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a></p>
+      </header>
+      <section class="block summary-block">
+        <h2 class="eyebrow">專業簡介</h2>
+        <p class="summary">具備中文（繁體與簡體）、日文、英文能力的三語翻譯與口譯人員。在半導體、建設等技術領域，以及漫畫、視覺小說、遊戲等創意領域，累積六年以上的日中翻譯與口譯實務經驗。中文母語、日檢 N1、英文具實務溝通能力。現承接翻譯、在地化與口譯之委託案件。</p>
+      </section>
+      
+      <section class="block">
+        <h2 class="eyebrow">語言能力</h2>
+        <ul class="bullets"><li>中文 — 母語（繁體、簡體）</li><li>日文 — 日檢 N1（商務／專業級）</li><li>英文 — 實務溝通程度</li><li>翻譯方向：日文 → 繁體／簡體中文 · 日中逐步口譯</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">核心技能</h2>
+        <ul class="bullets"><li>在地化 — 漫畫、視覺小說、MMORPG 等遊戲文本、配音／台詞腳本校稿</li><li>口譯 — 半導體與建設客戶之現場、廠區、會議逐步口譯</li><li>CAT 與工具 — memoQ、共同翻譯平台（みんなで翻訳）、漫畫 OCR 與嵌字</li><li>品質掌控 — 術語統一、語氣與文體調整、成人內容處理、嚴守 NDA</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">工作經歷</h2>
+        
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">自由接案 翻譯・口譯</span>
+            <span class="role-org">日本／遠端</span>
+            <span class="role-dates">2014 – 至今</span>
+          </div>
+          <ul class="bullets"><li>為漫畫、視覺小說與遊戲客戶提供日文 → 中文（繁體與簡體）翻譯與在地化。</li><li>依專案承接半導體與建設客戶之逐步口譯。</li><li>建立並維護各作品專屬術語表與風格指南，確保長期連載之譯名一致性。</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">IT 顧問</span>
+            <span class="role-org">BlueMeme 股份有限公司（熊本）</span>
+            <span class="role-dates">2026/6 – 至今</span>
+          </div>
+          <ul class="bullets"><li>於低程式碼／快速開發環境提供 IT 顧問服務，銜接技術與業務需求。</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">建築現場口譯・翻譯</span>
+            <span class="role-org">大和ハウス・清水建設・大成建設（台灣）</span>
+            <span class="role-dates">2017 – 2023</span>
+          </div>
+          <ul class="bullets"><li>負責台灣三家日商總承包商大型建設專案之口譯與筆譯。</li><li>處理技術文件、現場會議，並協調日方與台方團隊。</li></ul>
+        </div>
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">其他口譯經歷</span>
+            <span class="role-org">JASM · 豊工務店 · JUcan</span>
+            <span class="role-dates">不定期</span>
+          </div>
+          <ul class="bullets"><li>為製造與建設客戶提供現場／專案口譯及語言支援。</li></ul>
+        </div>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">主要在地化作品</h2>
+        <ul class="bullets"><li>漫畫在地化 — JES Corporation — 日文 → 簡體中文 — 連載 4 部以上</li><li>視覺小說 —「Maid for Loving You」— 日文 → 繁體中文（成人向作品）</li><li>MMORPG 在地化 — 日文 → 中文（NDA）</li><li>配音／台詞腳本校稿 — 日文（NDA）</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">其他</h2>
+        <ul class="bullets"><li>線上日語講師 — Preply — 從會話到日檢 N1 之教學輔導</li><li>雙語內容創作 — 外國勞工經驗、勞動議題與台日文化比較等文章</li></ul>
+      </section>
+      <section class="block">
+        <h2 class="eyebrow">學歷與證照</h2>
+        <ul class="bullets"><li>應用日語系（翻譯組）學士 — 南台科技大學、2012</li><li>早稻田大學 日本語教育課程 結業證書</li><li>日本語能力試驗 JLPT N1 合格</li></ul>
+      </section>
+    </article>
+  </main>
+<script>
+(function(){
+  var btns = Array.prototype.slice.call(document.querySelectorAll('[data-set-lang]'));
+  var panes = Array.prototype.slice.call(document.querySelectorAll('.pane'));
+  var titles = {"en":"Kuo Yuwen — Japanese ⇄ Chinese Translator & Interpreter","ja":"郭毓雯 — 日中翻訳・通訳","zh":"郭毓雯 — 日中翻譯・口譯"};
+  function set(lang){
+    panes.forEach(function(p){
+      var on = p.getAttribute('data-lang') === lang;
+      p.classList.toggle('is-active', on);
+      if(on){ p.removeAttribute('hidden'); }
+      else { p.setAttribute('hidden',''); }
+      if(on){ p.style.animation='none'; void p.offsetWidth; p.style.animation=''; }
+    });
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-set-lang') === lang;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true':'false');
+    });
+    document.documentElement.setAttribute('lang', lang);
+    if(titles[lang]) document.title = titles[lang];
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ set(b.getAttribute('data-set-lang')); }); });
+})();
+</script>
+</body>
+</html>
