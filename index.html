@@ -3,567 +3,1038 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kuo Yuwen — Resume</title>
+<meta name="color-scheme" content="light">
+<meta name="description" content="Kuo Yuwen (郭毓雯), Japanese to Chinese translator and interpreter. Manga and game localization, technical interpreting. Kumamoto, Japan.">
+<title>Kuo Yuwen — Japanese → Chinese Translator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231c1c1c'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --ink:#17262c; --teal:#1f5d6b; --teal-deep:#123e48;
-  --paper:#fbfcfc; --line:#dde6e8; --muted:#566a70; --tint:#eef4f5;
-  --flag:#8a4a52; --flag-bg:#f7eeef; --flag-line:#e6d2d4;
-  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+:root {
+  --ink: #1c1c1c;
+  --muted: #4e5964;
+  --line: #e4e4e4;
+  --paper: #fff;
+  --adult: #6e2a34;
+  --sans: "Source Sans 3", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Palatino, "Palatino Linotype", "Yu Mincho", "Hiragino Mincho ProN", "Songti TC", "PMingLiU", serif;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0; background:var(--paper); color:var(--ink);
-  font-family:var(--sans); font-size:16px; line-height:1.6;
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  border-top: 3px solid var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-.pane[data-lang="ja"]{font-family:"IBM Plex Sans","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif}
-.pane[data-lang="zh"]{font-family:"IBM Plex Sans","PingFang TC","Hiragino Sans TC","Microsoft JhengHei","Noto Sans TC",sans-serif}
+.pane[lang="ja"] { font-family: "Source Sans 3", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; line-break: strict; }
+.pane[lang="zh-Hant"] { font-family: "Source Sans 3", "PingFang TC", "Hiragino Sans CNS", "Noto Sans TC", "Microsoft JhengHei", sans-serif; line-break: strict; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; }
+::selection { background: #e6e6e6; color: var(--ink); }
 
-/* top bar */
-.topbar{
-  position:sticky; top:0; z-index:10;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:.6rem 1rem; flex-wrap:wrap; padding:.7rem clamp(1rem,4vw,2rem);
-  background:rgba(251,252,252,.86); backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--line);
+.skip {
+  position: absolute;
+  left: 0.75rem;
+  top: -4rem;
+  z-index: 20;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.55rem 0.8rem;
+  text-decoration: none;
 }
-.brand{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--muted); text-transform:uppercase}
-.lang-toggle{display:flex; gap:.25rem}
-.lang-btn{
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.04em;
-  padding:.32rem .6rem; border:1px solid var(--line); border-radius:999px;
-  background:transparent; color:var(--muted); cursor:pointer;
-  transition:background .18s ease,color .18s ease,border-color .18s ease;
-}
-.lang-btn:hover{color:var(--teal); border-color:var(--teal)}
-.lang-btn.is-active{background:var(--teal); color:#fff; border-color:var(--teal)}
-.lang-btn:focus-visible{outline:2px solid var(--teal-deep); outline-offset:2px}
+.skip:focus { top: 0.55rem; }
 
-/* view tabs */
-.viewnav{display:flex; gap:1.1rem; order:3; width:100%; border-top:1px solid var(--line); padding-top:.55rem}
-.view-btn{
-  font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; text-transform:uppercase;
-  padding:.1rem 0 .3rem; border:0; border-bottom:2px solid transparent;
-  background:transparent; color:var(--muted); cursor:pointer;
-  transition:color .18s ease,border-color .18s ease;
-}
-.view-btn:hover{color:var(--teal)}
-.view-btn.is-active{color:var(--teal); border-bottom-color:var(--teal)}
-.view-btn:focus-visible{outline:2px solid var(--teal-deep); outline-offset:3px}
-.pane[data-lang="ja"] .view-btn,.pane[data-lang="zh"] .view-btn{text-transform:none}
-@media (min-width:640px){
-  .viewnav{order:0; width:auto; border-top:0; padding-top:0; margin-left:.4rem; margin-right:auto}
-}
-
-/* page */
-.sheet{max-width:780px; margin:0 auto; padding:clamp(1.6rem,5vw,3.4rem) clamp(1.2rem,5vw,2.6rem) 4rem}
-.pane{animation:rise .38s ease both}
-@keyframes rise{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
-
-/* hero */
-.hero{margin-bottom:1.6rem}
-.name{
-  font-size:clamp(2.1rem,6vw,2.9rem); font-weight:700; line-height:1.05;
-  letter-spacing:-.01em; margin:0 0 .5rem;
-}
-.name-sub{
-  display:block; font-family:var(--mono); font-weight:500;
-  font-size:.8rem; letter-spacing:.06em; color:var(--muted);
-  margin-top:.55rem;
-}
-.tagline{color:var(--teal); font-weight:600; font-size:1.02rem; margin:.2rem 0 .9rem}
-.meta{font-size:.86rem; color:var(--muted); margin:0; line-height:1.9}
-.meta .dot{margin:0 .5rem; color:var(--line)}
-.meta-link{color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line); transition:color .15s,border-color .15s}
-.meta-link:hover{color:var(--teal); border-color:var(--teal)}
-.meta-link:focus-visible{outline:2px solid var(--teal-deep); outline-offset:2px}
-
-/* blocks */
-.block{padding-top:1.5rem; margin-top:1.5rem; border-top:1px solid var(--line)}
-.summary-block{border-top:none; padding-top:.3rem; margin-top:.3rem}
-.eyebrow{
-  font-family:var(--mono); font-weight:600; font-size:.72rem;
-  letter-spacing:.14em; text-transform:uppercase; color:var(--teal);
-  margin:0 0 .85rem;
-}
-.pane[data-lang="ja"] .eyebrow,.pane[data-lang="zh"] .eyebrow{letter-spacing:.22em; text-transform:none; font-size:.82rem}
-.summary{margin:0; color:#2a3a40; font-size:.98rem}
-
-.bullets{list-style:none; margin:0; padding:0}
-.bullets li{position:relative; padding-left:1.15rem; margin-bottom:.5rem; font-size:.94rem; color:#2a3a40}
-.bullets li::before{content:""; position:absolute; left:0; top:.62em; width:6px; height:6px; border:1.5px solid var(--teal); border-radius:50%}
-
-/* roles */
-.role{margin-bottom:1.15rem}
-.role:last-child{margin-bottom:0}
-.role-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:.1rem .6rem; margin-bottom:.4rem}
-.role-title{font-weight:700; font-size:1rem}
-.role-org{color:var(--muted); font-size:.92rem}
-.role-dates{margin-left:auto; font-family:var(--mono); font-size:.74rem; letter-spacing:.03em; color:var(--muted); white-space:nowrap}
-
-/* portfolio */
-.notice{
-  display:flex; gap:.6rem; align-items:flex-start;
-  border:1px solid var(--flag-line); background:var(--flag-bg);
-  border-radius:4px; padding:.7rem .85rem; margin:0 0 1.4rem;
-  font-size:.86rem; color:#5f3d42; line-height:1.65;
-}
-.notice strong{color:var(--flag); font-weight:600}
-.work{margin-bottom:1.4rem}
-.work:last-child{margin-bottom:0}
-.work-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:.35rem .6rem; margin-bottom:.3rem}
-.work-title{font-weight:700; font-size:1rem}
-.badge{
-  font-family:var(--mono); font-size:.62rem; font-weight:600; letter-spacing:.08em;
-  padding:.13rem .42rem; border-radius:3px; white-space:nowrap;
-  color:var(--flag); background:var(--flag-bg); border:1px solid var(--flag-line);
-}
-.badge.nda{color:var(--muted); background:var(--tint); border-color:var(--line)}
-.work-spec{
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.02em; color:var(--muted);
-  margin:0 0 .45rem;
-}
-.pane[data-lang="ja"] .work-spec,.pane[data-lang="zh"] .work-spec{font-family:inherit; font-size:.8rem}
-.work-note{margin:.55rem 0 0; font-size:.86rem; color:var(--muted)}
-
-/* mobile */
-@media (max-width:520px){
-  .role-dates{margin-left:0; width:100%; order:3}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-@media (prefers-reduced-motion:reduce){
-  .pane{animation:none}
-  *{scroll-behavior:auto}
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.bar-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0.35rem clamp(1rem, 3vw, 1.5rem);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "mark langs" "views views";
+  align-items: center;
+  column-gap: 1rem;
+}
+.mark {
+  grid-area: mark;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+.langs {
+  grid-area: langs;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.15rem;
+}
+.views {
+  grid-area: views;
+  display: flex;
+  gap: 0.15rem 1.1rem;
+}
+.lang-btn, .view-btn {
+  min-height: 44px;
+  border-radius: 2px;
+}
+.lang-btn {
+  padding: 0.35rem 0.7rem;
+  color: var(--muted);
+}
+.lang-btn:hover { color: var(--ink); }
+.lang-btn.is-active { background: var(--ink); color: #fff; }
+.view-btn {
+  padding: 0.35rem 0.05rem 0.45rem;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+.view-btn:hover { color: var(--ink); }
+.view-btn.is-active { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+.lang-btn:focus-visible, .view-btn:focus-visible, a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+@media (min-width: 760px) {
+  .bar-inner {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "mark views langs";
+    min-height: 3.6rem;
+  }
+  .views { align-self: stretch; align-items: center; margin-left: 1.25rem; }
+}
+@media (max-width: 380px) {
+  .lang-btn { padding-inline: 0.45rem; }
 }
 
-/* print → clean single-language PDF of whatever is on screen */
-@media print{
-  .topbar{display:none}
-  body{background:#fff}
-  .sheet{max-width:none; padding:0 .2in}
-  .pane{animation:none}
-  .block{break-inside:avoid}
-  .role{break-inside:avoid}
-  .work{break-inside:avoid}
-  .notice{break-inside:avoid}
-  a{color:inherit; border:none}
+.sheet {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 3vw, 1.5rem) 4.5rem;
+  scroll-margin-top: 5rem;
 }
+.hero { margin-bottom: 1.75rem; max-width: 40rem; }
+.name {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.35rem, 6vw, 3.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.pane[lang="ja"] .name, .pane[lang="zh-Hant"] .name { letter-spacing: 0.02em; }
+.name-sub {
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.98rem;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+.tagline {
+  margin: 0.95rem 0 0;
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0.7rem 0 0;
+  font-style: normal;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+.meta a { text-decoration: underline; text-underline-offset: 0.18em; }
+.meta a:hover { color: var(--ink); }
+@media (min-width: 640px) {
+  .meta { flex-direction: row; gap: 0.35rem 1.35rem; }
+}
+
+.layout { display: flex; flex-direction: column; gap: 2.15rem; }
+@media (min-width: 900px) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 16.75rem;
+    grid-template-areas: "profile profile" "main side";
+    column-gap: 3.5rem;
+    row-gap: 2.25rem;
+    align-items: start;
+  }
+  .profile { grid-area: profile; border-bottom: 1px solid var(--line); padding-bottom: 1.6rem; }
+  .main-col { grid-area: main; }
+  .side { grid-area: side; }
+}
+.view[data-view="portfolio"] { max-width: 42rem; }
+
+.sec-label {
+  margin: 0 0 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pane[lang="ja"] .sec-label, .pane[lang="zh-Hant"] .sec-label {
+  letter-spacing: 0.14em;
+  text-transform: none;
+  font-size: 0.84rem;
+}
+.summary { margin: 0; max-width: 42rem; }
+.summary + .summary { margin-top: 0.75rem; }
+
+.block + .block { margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.side .block + .block { margin-top: 1.75rem; padding-top: 0; border-top: 0; }
+.view > .block { margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+
+.facts { margin: 0; }
+.facts div + div { margin-top: 0.75rem; }
+.facts dt { font-size: 0.78rem; color: var(--muted); }
+.facts dd { margin: 0.08rem 0 0; }
+
+.plain { margin: 0; padding-left: 1.1rem; }
+.plain li { margin: 0.28rem 0; }
+.plain li::marker { color: var(--ink); }
+
+.edu + .edu { margin-top: 0.85rem; }
+.edu-title { margin: 0; font-weight: 600; }
+.edu-sub { margin: 0.1rem 0 0; color: var(--muted); font-size: 0.95rem; }
+
+.role + .role { margin-top: 1.35rem; }
+.role-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+}
+.role-title { margin: 0; font-size: 1.05rem; font-weight: 700; }
+.role-dates {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.role-org { margin: 0.12rem 0 0; color: var(--muted); }
+.role .plain { margin-top: 0.45rem; }
+@media (max-width: 640px) {
+  .role-top { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+  .role-dates { white-space: normal; }
+}
+
+.notice {
+  margin: 0 0 1.6rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--ink);
+  max-width: 42rem;
+}
+.work { padding-top: 1.35rem; margin-top: 1.35rem; border-top: 1px solid var(--line); }
+.work:first-of-type { border-top: 0; margin-top: 0; padding-top: 0; }
+.work-title { margin: 0; font-size: 1.08rem; font-weight: 700; line-height: 1.4; }
+.badge {
+  display: inline-block;
+  vertical-align: 0.12em;
+  margin-left: 0.35rem;
+  padding: 0.02rem 0.38rem;
+  border: 1px solid #c8c8c8;
+  border-radius: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+.badge-adult { color: var(--adult); border-color: #c9a8ad; }
+.badge-muted { color: var(--muted); }
+.sample-flag { margin: 0.45rem 0 0; max-width: 42rem; }
+.work-spec { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.95rem; }
+.work-note { margin: 0.55rem 0 0; color: var(--muted); font-size: 0.95rem; }
+
+@media (max-width: 899px) {
+  .side { padding-top: 0.25rem; }
+}
+
+@media print {
+  body { border-top: 0; font-size: 11pt; background: #fff; }
+  .bar, .skip, .visually-hidden { display: none !important; }
+  .sheet { max-width: none; padding: 0; }
+  .layout { display: block !important; }
+  .side, .main-col { margin-top: 1.25rem; }
+  .role, .work, .edu, .notice { break-inside: avoid; }
+  a { text-decoration: none; }
+  .lang-btn.is-active { background: none; color: inherit; }
+}
+@page { margin: 14mm 16mm; }
 </style>
 </head>
 <body>
-  <div class="topbar">
-    <span class="brand">郭毓雯 · Kuo Yuwen</span>
-    <nav class="viewnav" aria-label="Section"><button class="view-btn is-active" data-set-view="resume" aria-pressed="true" data-label-en="Resume" data-label-ja="経歴" data-label-zh="經歷">Resume</button><button class="view-btn" data-set-view="portfolio" aria-pressed="false" data-label-en="Portfolio" data-label-ja="作品集" data-label-zh="作品集">Portfolio</button></nav>
-    <nav class="lang-toggle" aria-label="Language"><button class="lang-btn is-active" data-set-lang="en" aria-pressed="true">EN</button><button class="lang-btn" data-set-lang="ja" aria-pressed="false">日本語</button><button class="lang-btn" data-set-lang="zh" aria-pressed="false">繁中</button></nav>
+<a class="skip" href="#content" data-label-en="Skip to content" data-label-ja="本文へスキップ" data-label-zh="跳至本文">Skip to content</a>
+<p class="visually-hidden" id="live" aria-live="polite"></p>
+<header class="bar">
+  <div class="bar-inner">
+    <span class="mark">郭毓雯</span>
+    <nav class="views" role="tablist" data-label-en="Section" data-label-ja="表示" data-label-zh="頁面" aria-label="Section">
+      <button type="button" class="view-btn is-active" role="tab" id="tab-resume" data-set-view="resume" aria-selected="true" tabindex="0" data-label-en="Resume" data-label-ja="経歴" data-label-zh="經歷">Resume</button>
+      <button type="button" class="view-btn" role="tab" id="tab-portfolio" data-set-view="portfolio" aria-selected="false" tabindex="-1" data-label-en="Portfolio" data-label-ja="作品集" data-label-zh="作品集">Portfolio</button>
+    </nav>
+    <nav class="langs" role="radiogroup" data-label-en="Language" data-label-ja="言語" data-label-zh="語言" aria-label="Language">
+      <button type="button" class="lang-btn is-active" role="radio" data-set-lang="en" aria-checked="true" tabindex="0">EN</button>
+      <button type="button" class="lang-btn" role="radio" data-set-lang="ja" aria-checked="false" tabindex="-1">日本語</button>
+      <button type="button" class="lang-btn" role="radio" data-set-lang="zh" aria-checked="false" tabindex="-1">繁中</button>
+    </nav>
   </div>
-  <main class="sheet">
+</header>
 
-    <article class="pane is-active" data-lang="en" lang="en">
-      <header class="hero">
-        <h1 class="name">Kuo Yuwen<span class="name-sub">郭毓雯 · やや</span></h1>
-        <p class="tagline">Japanese ⇄ Chinese Translator &amp; Interpreter — Manga / Game Localization</p>
-        <p class="meta"><span class="meta-item">Kumamoto, Japan</span><span class="dot" aria-hidden="true">·</span><a class="meta-link" href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a></p>
-      </header>
+<main id="content" class="sheet">
 
-      <div class="view" data-view="resume">
-      <section class="block summary-block">
-        <h2 class="eyebrow">Profile</h2>
-        <p class="summary">Trilingual translator and interpreter with 6+ years of professional experience in Japanese–Chinese translation and on-site interpretation across technical (semiconductor, construction) and creative (manga, visual novel, game) fields. Native Chinese (Traditional &amp; Simplified), JLPT N1 Japanese, working English. Available for freelance translation, localization, and interpretation.</p>
+<article class="pane" data-lang="en" lang="en">
+  <header class="hero">
+    <h1 class="name">Kuo Yuwen<span class="name-sub">郭毓雯 · やや</span></h1>
+    <p class="tagline">Japanese → Chinese translator and interpreter</p>
+    <address class="meta">
+      <span>Kumamoto, Japan</span>
+      <a href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a>
+    </address>
+  </header>
+
+  <div class="view" id="en-resume" role="tabpanel" aria-labelledby="tab-resume" data-view="resume">
+    <div class="layout">
+      <section class="profile">
+        <h2 class="sec-label">Profile</h2>
+        <p class="summary">Trilingual translator and interpreter. Native Chinese (Traditional and Simplified), JLPT N1 Japanese, working English. More than six years of Japanese–Chinese translation and on-site interpretation, in technical fields (semiconductor, construction) and creative fields (manga, visual novels, games). Traditional Chinese is written in natural Taiwanese Mandarin. Mature (18+) work is accepted.</p>
+        <p class="summary">Freelance Japanese → Chinese translation and interpretation since 2014. A full-time sales role runs alongside that work, so translation is mainly on weekday evenings and weekends.</p>
       </section>
 
-      <section class="block">
-        <h2 class="eyebrow">Languages</h2>
-        <ul class="bullets"><li>Chinese — Native (Traditional &amp; Simplified)</li><li>Japanese — JLPT N1 (full professional proficiency)</li><li>English — Working proficiency</li><li>Pairs: JP → Traditional / Simplified Chinese · JP ⇄ ZH consecutive interpretation</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">Core Skills</h2>
-        <ul class="bullets"><li>Localization — manga, visual novels, MMORPG / game text, voice &amp; dialogue script proofreading</li><li>Interpretation — consecutive interpreting for semiconductor &amp; construction clients (factory, site, meeting)</li><li>CAT &amp; tools — memoQ, collaborative platforms (Minna de Honyaku), manga OCR &amp; on-image typesetting</li><li>Quality — terminology consistency, register/tone matching, mature-content handling, NDA compliance</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">Experience</h2>
+      <div class="main-col">
+        <section class="block">
+          <h2 class="sec-label">Experience</h2>
 
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">Freelance Translator &amp; Interpreter</span>
-            <span class="role-org">Japan / Remote</span>
-            <span class="role-dates">2014 – Present</span>
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">Freelance translator and interpreter</h3>
+              <p class="role-dates">2014 – Present</p>
+            </div>
+            <p class="role-org">Japan / Remote</p>
+            <ul class="plain">
+              <li>Japanese → Chinese (Traditional and Simplified) translation and localization for manga, visual novels, and games.</li>
+              <li>Consecutive interpretation for semiconductor and construction clients, project by project.</li>
+              <li>Glossaries and style guides for each title, so names and tone stay consistent on long series.</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>Japanese → Chinese (Traditional &amp; Simplified) translation and localization for manga, visual novel, and game clients.</li><li>Consecutive interpretation for semiconductor and construction clients on a project basis.</li><li>Build and maintain per-title glossaries and style guides to keep naming consistent across long-running series.</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">IT Consultant</span>
-            <span class="role-org">BlueMeme Inc., Kumamoto</span>
-            <span class="role-dates">Jun 2026 – Present</span>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">Sales</h3>
+              <p class="role-dates">Jun 2026 – Present</p>
+            </div>
+            <p class="role-org">BlueMeme Inc., Kumamoto</p>
+            <ul class="plain">
+              <li>Full-time position. Translation work is mainly on weekday evenings and weekends.</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>IT consulting in a low-code / rapid application development environment; bridge technical and business stakeholders.</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">On-site Interpreter &amp; Translator — Construction</span>
-            <span class="role-org">Daiwa House · Shimizu Corporation · Taisei Corporation (Taiwan)</span>
-            <span class="role-dates">2017 – 2023</span>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">Interpreter and translator — construction</h3>
+              <p class="role-dates">from 2017 onward</p>
+            </div>
+            <p class="role-org">Daiwa House · Shimizu Corporation · Taisei Corporation (Taiwan)</p>
+            <ul class="plain">
+              <li>Interpretation and translation on projects for these contractors, including technical documents and site meetings.</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>Interpreted and translated for large-scale construction projects across three Japanese general contractors in Taiwan.</li><li>Handled technical documentation, on-site meetings, and coordination between Japanese and Taiwanese teams.</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">Additional Interpretation Engagements</span>
-            <span class="role-org">JASM · 豊工務店 · JUcan</span>
-            <span class="role-dates">various</span>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">Other interpretation</h3>
+              <p class="role-dates">Project-based</p>
+            </div>
+            <p class="role-org">JASM · 豊工務店 · JUcan</p>
+            <ul class="plain">
+              <li>On-site and project interpretation for manufacturing and construction clients.</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>On-site / project interpretation and language support for manufacturing and construction clients.</li></ul>
-        </div>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">Selected Localization Credits</h2>
-        <ul class="bullets"><li>Manga localization — JES Corporation — JP → Simplified Chinese — 4+ ongoing titles</li><li>Visual novel — "Maid for Loving You" — JP → Traditional Chinese (mature / 18+ title)</li><li>MMORPG localization — JP → Chinese (under NDA)</li><li>Voice-acting / dialogue script proofreading — JP (under NDA)</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">Also</h2>
-        <ul class="bullets"><li>Online Japanese Instructor — Preply — conversation to JLPT N1 support</li><li>Bilingual content creator — articles on foreign-worker experience, labor topics, Taiwan–Japan culture</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">Education &amp; Certifications</h2>
-        <ul class="bullets"><li>B.A. in Applied Japanese (Translation specialization) — Southern Taiwan University of Science and Technology, 2012</li><li>Japanese Language Program Certificate — Waseda University, 2013–2014</li><li>JLPT N1 (highest level)</li></ul>
-      </section>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">Online Japanese instructor</h3>
+            </div>
+            <p class="role-org">Preply</p>
+            <ul class="plain">
+              <li>Conversation through JLPT N1 preparation.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2 class="sec-label">Selected work</h2>
+          <ul class="plain">
+            <li>Manga localization — JES Corporation — Japanese → Simplified Chinese — 4+ serial titles, 200+ pages, from 2024, including adult titles</li>
+            <li>Visual novel — “Maid for Loving You” — Japanese → Traditional Chinese, full localization (18+)</li>
+            <li>MMORPG localization — Japanese → Chinese — UI, quest, and item text (NDA)</li>
+            <li>Voice-script proofreading — Japanese (NDA)</li>
+          </ul>
+        </section>
       </div>
 
-      <div class="view" data-view="portfolio" hidden>
-      <section class="block summary-block">
-        <h2 class="eyebrow">Portfolio</h2>
-        <p class="notice"><span><strong>Adult content notice —</strong> this page lists localization work on mature (18+) titles. Entries marked <span class="badge">18+</span> contain explicit sexual content. Work under NDA is listed without client or title names.</span></p>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">Manga localization — JES Corporation</span><span class="badge">18+</span></div>
-          <p class="work-spec">JP → Simplified Chinese · 4+ ongoing titles · 200+ pages · 2024–present</p>
-          <ul class="bullets"><li>Ongoing serialized localization delivered on a weekly cycle, including adult titles.</li><li>Maintain per-title glossaries and register rules so character voice and naming stay consistent across volumes.</li><li>Handle editorial review cycles: respond to editor feedback line by line, revise or defend each rendering with reasoning.</li></ul>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">Visual novel — “Maid for Loving You”</span><span class="badge">18+</span></div>
-          <p class="work-spec">JP → Traditional Chinese · full-title localization</p>
-          <ul class="bullets"><li>Designed a distinct register for each character and held it across every branch of the script.</li><li>Kept choice-branch text consistent so repeated lines read the same wherever the player arrives from.</li></ul>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">Situation voice drama script — bilingual sample</span><span class="badge">18+</span></div>
-          <p class="work-spec">JP → Traditional Chinese (Taiwan) · 1 scene · 51 lines</p>
-          <ul class="bullets"><li>Dialogue only; SE and stage directions left in Japanese for the audio team to work from.</li><li>Line length and breath points prioritised over literal fidelity — the text has to be speakable in one take.</li><li>Position of “♥” and ellipses preserved, since they double as timing and breath cues for the voice actor.</li></ul>
-          <p class="work-note">Bilingual sample PDF available on request.</p>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">MMORPG localization</span><span class="badge nda">NDA</span></div>
-          <p class="work-spec">JP → Chinese · UI, quest and item text</p>
-          <ul class="bullets"><li>High-volume game text with strict terminology control across systems and quest lines.</li></ul>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">Voice / dialogue script proofreading</span><span class="badge nda">NDA</span></div>
-          <p class="work-spec">Japanese monolingual · character voice line sheets</p>
-          <ul class="bullets"><li>Line-by-line proofreading of Japanese voice scripts to commercial publishing standard.</li></ul>
-        </div>
-      </section>
-
-      <section class="block">
-        <h2 class="eyebrow">Approach</h2>
-        <ul class="bullets"><li>Match the register, don't flatten it — explicit source stays explicit, soft-spoken characters stay soft.</li><li>Write for the target reader, not the source grammar. Traditional Chinese work is written in Taiwanese Mandarin, not translationese.</li><li>Leave production markup alone. SE, stage directions and timing cues belong to the audio and editorial teams.</li><li>Keep a glossary from the first page, so volume twelve still sounds like volume one.</li></ul>
-      </section>
-      </div>
-    </article>
-
-    <article class="pane" data-lang="ja" lang="ja" hidden>
-      <header class="hero">
-        <h1 class="name">郭 毓雯<span class="name-sub">やや / Kuo Yuwen</span></h1>
-        <p class="tagline">日中翻訳・通訳 — マンガ・ゲームローカライズ</p>
-        <p class="meta"><span class="meta-item">熊本県</span><span class="dot" aria-hidden="true">·</span><a class="meta-link" href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a></p>
-      </header>
-
-      <div class="view" data-view="resume">
-      <section class="block summary-block">
-        <h2 class="eyebrow">職務要約</h2>
-        <p class="summary">日本語・中国語（繁体字／簡体字）・英語のトリリンガル翻訳者・通訳者。半導体・建設などの技術分野と、マンガ・ノベルゲームなどのクリエイティブ分野の双方で、6年以上の日中翻訳・通訳の実務経験を持つ。中国語ネイティブ、日本語JLPT N1、英語は実務レベル。翻訳・ローカライズ・通訳の業務委託を承ります。</p>
-      </section>
-
-      <section class="block">
-        <h2 class="eyebrow">語学力</h2>
-        <ul class="bullets"><li>中国語 — ネイティブ（繁体字・簡体字）</li><li>日本語 — JLPT N1（ビジネスレベル）</li><li>英語 — 実務レベル</li><li>翻訳方向：日本語 → 繁体字／簡体字中国語 · 日中逐次通訳</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">スキル</h2>
-        <ul class="bullets"><li>ローカライズ — マンガ、ノベルゲーム、MMORPG等のゲームテキスト、ボイス台本・セリフ校正</li><li>通訳 — 半導体・建設クライアント向けの逐次通訳（工場・現場・会議）</li><li>CAT・ツール — memoQ、共同翻訳（みんなで翻訳）、マンガOCR・写植</li><li>品質管理 — 用語統一、文体・トーン調整、成人向けコンテンツ対応、NDA遵守</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">職務経歴</h2>
-
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">フリーランス翻訳者・通訳者</span>
-            <span class="role-org">日本／リモート</span>
-            <span class="role-dates">2014年 – 現在</span>
+      <aside class="side">
+        <section class="block">
+          <h2 class="sec-label">Languages</h2>
+          <dl class="facts">
+            <div><dt>Chinese</dt><dd>Native (Traditional and Simplified)</dd></div>
+            <div><dt>Japanese</dt><dd>JLPT N1</dd></div>
+            <div><dt>English</dt><dd>Working proficiency</dd></div>
+            <div><dt>Translation</dt><dd>Japanese → Traditional Chinese (Taiwan) and Simplified Chinese</dd></div>
+            <div><dt>Interpretation</dt><dd>Japanese–Chinese consecutive</dd></div>
+          </dl>
+        </section>
+        <section class="block">
+          <h2 class="sec-label">Tools</h2>
+          <ul class="plain">
+            <li>memoQ</li>
+            <li>Minna de Honyaku</li>
+            <li>Manga OCR and on-image typesetting</li>
+          </ul>
+        </section>
+        <section class="block">
+          <h2 class="sec-label">Education</h2>
+          <div class="edu">
+            <p class="edu-title">Southern Taiwan University of Science and Technology</p>
+            <p class="edu-sub">B.A., Applied Japanese (translation), 2012</p>
           </div>
-          <ul class="bullets"><li>マンガ・ノベルゲーム・ゲーム案件で日本語 → 中国語（繁体字・簡体字）の翻訳・ローカライズを提供。</li><li>半導体・建設クライアント向けの逐次通訳をプロジェクト単位で担当。</li><li>長期連載作品の用語集・スタイルガイドを整備し、訳語の一貫性を確保。</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">ITコンサルタント</span>
-            <span class="role-org">株式会社BlueMeme（熊本）</span>
-            <span class="role-dates">2026年6月 – 現在</span>
+          <div class="edu">
+            <p class="edu-title">Waseda University</p>
+            <p class="edu-sub">Japanese Language Program, 2013–2014</p>
           </div>
-          <ul class="bullets"><li>ローコード／高速開発環境でのITコンサルティング。技術と業務の橋渡しを担当。</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">建設現場通訳・翻訳</span>
-            <span class="role-org">大和ハウス・清水建設・大成建設（台湾）</span>
-            <span class="role-dates">2017年 – 2023年</span>
+          <div class="edu">
+            <p class="edu-title">JLPT N1</p>
+            <p class="edu-sub">Japanese-Language Proficiency Test</p>
           </div>
-          <ul class="bullets"><li>台湾の日系ゼネコン3社の大型建設プロジェクトで通訳・翻訳を担当。</li><li>技術文書、現場会議、日台チーム間の調整業務に対応。</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">通訳業務（その他）</span>
-            <span class="role-org">JASM · 豊工務店 · JUcan</span>
-            <span class="role-dates">随時</span>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <div class="view" id="en-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" data-view="portfolio" hidden>
+    <section>
+      <h2 class="sec-label">Portfolio</h2>
+      <p class="notice"><strong>Adult content.</strong> This page lists localization of mature (18+) titles. Entries marked 18+ contain explicit sexual content. NDA work is listed without client or title names. The situation voice drama is a bilingual sample, not a commercial job.</p>
+
+      <article class="work">
+        <h3 class="work-title">Manga localization — JES Corporation <span class="badge badge-adult">18+ incl.</span></h3>
+        <p class="work-spec">Japanese → Simplified Chinese · 4+ ongoing titles · 200+ pages · 2024–present</p>
+        <ul class="plain">
+          <li>Ongoing serialized localization delivered on a weekly cycle, including adult titles.</li>
+          <li>Maintain per-title glossaries and register rules so character voice and naming stay consistent across volumes.</li>
+          <li>Handle editorial review cycles: respond to editor feedback line by line, revise or defend each rendering with reasoning.</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">Visual novel — “Maid for Loving You” <span class="badge badge-adult">18+</span></h3>
+        <p class="work-spec">Japanese → Traditional Chinese · full-title localization</p>
+        <ul class="plain">
+          <li>Designed a distinct register for each character and held it across every branch of the script.</li>
+          <li>Kept choice-branch text consistent so repeated lines read the same wherever the player arrives from.</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">Situation voice drama script <span class="badge">bilingual sample</span> <span class="badge badge-adult">18+</span></h3>
+        <p class="sample-flag"><strong>Bilingual sample.</strong> This is not a commercial client job. It is a parallel-text sample prepared for this portfolio.</p>
+        <p class="work-spec">Japanese → Traditional Chinese (Taiwan) · 1 scene · 51 lines</p>
+        <ul class="plain">
+          <li>Dialogue only; SE and stage directions left in Japanese for the audio team to work from.</li>
+          <li>Line length and breath points prioritised over literal fidelity — the text has to be speakable in one take.</li>
+          <li>Position of “♥” and ellipses preserved, since they double as timing and breath cues for the voice actor.</li>
+        </ul>
+        <p class="work-note">Bilingual sample PDF available on request.</p>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">MMORPG localization <span class="badge badge-muted">NDA</span></h3>
+        <p class="work-spec">Japanese → Chinese · UI, quest, and item text</p>
+        <ul class="plain">
+          <li>High-volume game text with strict terminology control across systems and quest lines.</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">Voice / dialogue script proofreading <span class="badge badge-muted">NDA</span></h3>
+        <p class="work-spec">Japanese monolingual · character voice line sheets</p>
+        <ul class="plain">
+          <li>Line-by-line proofreading of Japanese voice scripts to commercial publishing standard.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="block">
+      <h2 class="sec-label">Approach</h2>
+      <ul class="plain">
+        <li>Match the register, don't flatten it — explicit source stays explicit, soft-spoken characters stay soft.</li>
+        <li>Write for the target reader, not the source grammar. Traditional Chinese work is written in Taiwanese Mandarin, not translationese.</li>
+        <li>Leave production markup alone. SE, stage directions and timing cues belong to the audio and editorial teams.</li>
+        <li>Keep a glossary from the first page, so volume twelve still sounds like volume one.</li>
+      </ul>
+    </section>
+  </div>
+</article>
+
+<article class="pane" data-lang="ja" lang="ja" hidden>
+  <header class="hero">
+    <h1 class="name">郭 毓雯<span class="name-sub">やや ／ Kuo Yuwen</span></h1>
+    <p class="tagline">日中翻訳・通訳（日本語 → 中国語）</p>
+    <address class="meta">
+      <span>熊本県</span>
+      <a href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a>
+    </address>
+  </header>
+
+  <div class="view" id="ja-resume" role="tabpanel" aria-labelledby="tab-resume" data-view="resume" hidden>
+    <div class="layout">
+      <section class="profile">
+        <h2 class="sec-label">職務要約</h2>
+        <p class="summary">中国語ネイティブ（繁体字・簡体字）、日本語能力試験 N1。日中翻訳・通訳の実務経験は6年以上で、マンガ・ノベルゲーム・ゲームなどのクリエイティブ分野と、半導体・建設などの技術分野の両方に対応してきました。繁体字案件は台湾華語の自然な話し言葉で仕上げ、キャラクターごとの口調・語域を全編通して維持することを重視しています。成人向け（18禁）作品にも対応可能です。</p>
+        <p class="summary">2014年からフリーランスで日中翻訳・通訳を続けています。2026年6月から株式会社BlueMemeで営業（正社員）として勤務しており、翻訳の稼働は平日夜間・土日が中心です。</p>
+      </section>
+
+      <div class="main-col">
+        <section class="block">
+          <h2 class="sec-label">職務経歴</h2>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">フリーランス翻訳者・通訳者</h3>
+              <p class="role-dates">2014年 – 現在</p>
+            </div>
+            <p class="role-org">日本／リモート</p>
+            <ul class="plain">
+              <li>マンガ・ノベルゲーム・ゲーム案件の日本語 → 中国語（繁体字・簡体字）翻訳・ローカライズ。</li>
+              <li>半導体・建設クライアント向けの逐次通訳を、プロジェクト単位で担当。</li>
+              <li>作品ごとに用語集とスタイルガイドを整備し、訳語と口調の一貫性を保つ。</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>製造・建設クライアント向けの現場／プロジェクト通訳および言語サポート。</li></ul>
-        </div>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">主なローカライズ実績</h2>
-        <ul class="bullets"><li>マンガ・ローカライズ — JES Corporation — 日本語 → 簡体字中国語 — 連載4作品以上</li><li>ノベルゲーム —「Maid for Loving You」— 日本語 → 繁体字中国語（成人向け作品）</li><li>MMORPGローカライズ — 日本語 → 中国語（NDA）</li><li>ボイス台本・セリフ校正 — 日本語（NDA）</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">その他</h2>
-        <ul class="bullets"><li>オンライン日本語講師 — Preply — 会話からJLPT N1まで指導</li><li>バイリンガル・コンテンツ制作 — 外国人労働者・労働問題・台日文化比較などの記事</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">学歴・資格</h2>
-        <ul class="bullets"><li>応用日本語学科（翻訳専攻）学士 — 南台科技大学、2012年</li><li>早稲田大学 日本語別科 修了（2013年–2014年）</li><li>日本語能力試験 JLPT N1 合格</li></ul>
-      </section>
-      </div>
 
-      <div class="view" data-view="portfolio" hidden>
-      <section class="block summary-block">
-        <h2 class="eyebrow">作品集</h2>
-        <p class="notice"><span><strong>成人向けコンテンツを含みます —</strong> 本ページには成人向け（18禁）作品のローカライズ実績が含まれます。<span class="badge">18+</span> の表示がある案件は性的表現を含みます。NDA案件はクライアント名・作品名を伏せて記載しています。</span></p>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">マンガ・ローカライズ — JES Corporation</span><span class="badge">18+</span></div>
-          <p class="work-spec">日本語 → 簡体字中国語 ／ 連載4作品以上 ／ 累計200ページ超 ／ 2024年–現在</p>
-          <ul class="bullets"><li>成人向け作品を含む連載タイトルを、週次サイクルで継続納品。</li><li>作品ごとに用語集と語域ルールを整備し、巻をまたいでもキャラクターの口調と訳名がぶれない状態を維持。</li><li>編集者チェックの往復に対応。指摘を一件ずつ検討し、修正または根拠を添えた据え置きを回答。</li></ul>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">ノベルゲーム —「Maid for Loving You」</span><span class="badge">18+</span></div>
-          <p class="work-spec">日本語 → 繁体字中国語 ／ 全編ローカライズ</p>
-          <ul class="bullets"><li>キャラクターごとに語域を設計し、全ルートを通して崩さずに維持。</li><li>選択肢分岐のテキストを整合させ、どの経路から到達しても同じ台詞が同じ訳になる状態を担保。</li></ul>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">シチュエーションボイス台本 — 対訳サンプル</span><span class="badge">18+</span></div>
-          <p class="work-spec">日本語 → 繁体字中国語（台湾） ／ 1シーン ／ セリフ51本</p>
-          <ul class="bullets"><li>キャラクターのセリフのみを翻訳し、SE・演出指示は音響側が参照するため原文のまま保持。</li><li>逐語的な忠実さより、一息で発話できる長さと息継ぎの位置を優先。</li><li>「♥」や「……」の位置は原文どおりに保持。演技のタイミングと息づかいの指示を兼ねているため。</li></ul>
-          <p class="work-note">対訳サンプル（PDF）はご請求に応じて提供いたします。</p>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">MMORPG ローカライズ</span><span class="badge nda">NDA</span></div>
-          <p class="work-spec">日本語 → 中国語 ／ UI・クエスト・アイテムテキスト</p>
-          <ul class="bullets"><li>大量のゲームテキストを、システム・クエスト間で用語を統一しながら処理。</li></ul>
-        </div>
-
-        <div class="work">
-          <div class="work-head"><span class="work-title">ボイス台本・セリフ校正</span><span class="badge nda">NDA</span></div>
-          <p class="work-spec">日本語モノリンガル ／ キャラクターボイス台詞表</p>
-          <ul class="bullets"><li>日本語のボイス台本を、商業出版基準で一句ずつ校正。</li></ul>
-        </div>
-      </section>
-
-      <section class="block">
-        <h2 class="eyebrow">翻訳方針</h2>
-        <ul class="bullets"><li>語域を平坦化しない。露骨な原文は露骨なまま、控えめなキャラクターは控えめなまま訳す。</li><li>原文の文法ではなく読者の言葉で書く。繁体字案件は台湾華語の話し言葉で仕上げ、翻訳調を残さない。</li><li>制作側の記述には手を入れない。SE・演出指示・タイミング指示は音響／編集の領域として原文を保持。</li><li>初回から用語集を作る。12巻目でも1巻目と同じ声に聞こえる状態を保つため。</li></ul>
-      </section>
-      </div>
-    </article>
-
-    <article class="pane" data-lang="zh" lang="zh" hidden>
-      <header class="hero">
-        <h1 class="name">郭毓雯<span class="name-sub">Kuo Yuwen · やや</span></h1>
-        <p class="tagline">日中翻譯・口譯 — 漫畫・遊戲在地化</p>
-        <p class="meta"><span class="meta-item">日本熊本縣</span><span class="dot" aria-hidden="true">·</span><a class="meta-link" href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a></p>
-      </header>
-
-      <div class="view" data-view="resume">
-      <section class="block summary-block">
-        <h2 class="eyebrow">專業簡介</h2>
-        <p class="summary">具備中文（繁體與簡體）、日文、英文能力的三語翻譯與口譯人員。在半導體、建設等技術領域，以及漫畫、視覺小說、遊戲等創意領域，累積六年以上的日中翻譯與口譯實務經驗。中文母語、日檢 N1、英文具實務溝通能力。現承接翻譯、在地化與口譯之委託案件。</p>
-      </section>
-
-      <section class="block">
-        <h2 class="eyebrow">語言能力</h2>
-        <ul class="bullets"><li>中文 — 母語（繁體、簡體）</li><li>日文 — 日檢 N1（商務／專業級）</li><li>英文 — 實務溝通程度</li><li>翻譯方向：日文 → 繁體／簡體中文 · 日中逐步口譯</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">核心技能</h2>
-        <ul class="bullets"><li>在地化 — 漫畫、視覺小說、MMORPG 等遊戲文本、配音／台詞腳本校稿</li><li>口譯 — 半導體與建設客戶之現場、廠區、會議逐步口譯</li><li>CAT 與工具 — memoQ、共同翻譯平台（みんなで翻訳）、漫畫 OCR 與嵌字</li><li>品質掌控 — 術語統一、語氣與文體調整、成人內容處理、嚴守 NDA</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">工作經歷</h2>
-
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">自由接案 翻譯・口譯</span>
-            <span class="role-org">日本／遠端</span>
-            <span class="role-dates">2014 – 至今</span>
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">営業</h3>
+              <p class="role-dates">2026年6月 – 現在</p>
+            </div>
+            <p class="role-org">株式会社BlueMeme（熊本）</p>
+            <ul class="plain">
+              <li>本業（正社員）。翻訳業務は平日夜間・土日を中心に対応。</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>為漫畫、視覺小說與遊戲客戶提供日文 → 中文（繁體與簡體）翻譯與在地化。</li><li>依專案承接半導體與建設客戶之逐步口譯。</li><li>建立並維護各作品專屬術語表與風格指南，確保長期連載之譯名一致性。</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">IT 顧問</span>
-            <span class="role-org">BlueMeme 股份有限公司（熊本）</span>
-            <span class="role-dates">2026/6 – 至今</span>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">建設分野の通訳・翻訳</h3>
+              <p class="role-dates">2017年以降</p>
+            </div>
+            <p class="role-org">大和ハウス・清水建設・大成建設（台湾）</p>
+            <ul class="plain">
+              <li>各社のプロジェクトで通訳・翻訳を担当。技術文書と現場会議に対応。</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>於低程式碼／快速開發環境提供 IT 顧問服務，銜接技術與業務需求。</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">建築現場口譯・翻譯</span>
-            <span class="role-org">大和ハウス・清水建設・大成建設（台灣）</span>
-            <span class="role-dates">2017 – 2023</span>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">通訳業務（その他）</h3>
+              <p class="role-dates">随時</p>
+            </div>
+            <p class="role-org">JASM · 豊工務店 · JUcan</p>
+            <ul class="plain">
+              <li>製造・建設クライアント向けの現場およびプロジェクト通訳。</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>負責台灣三家日商總承包商大型建設專案之口譯與筆譯。</li><li>處理技術文件、現場會議，並協調日方與台方團隊。</li></ul>
-        </div>
-        <div class="role">
-          <div class="role-head">
-            <span class="role-title">其他口譯經歷</span>
-            <span class="role-org">JASM · 豊工務店 · JUcan</span>
-            <span class="role-dates">不定期</span>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">オンライン日本語講師</h3>
+            </div>
+            <p class="role-org">Preply</p>
+            <ul class="plain">
+              <li>会話からJLPT N1対策まで。</li>
+            </ul>
           </div>
-          <ul class="bullets"><li>為製造與建設客戶提供現場／專案口譯及語言支援。</li></ul>
-        </div>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">主要在地化作品</h2>
-        <ul class="bullets"><li>漫畫在地化 — JES Corporation — 日文 → 簡體中文 — 連載 4 部以上</li><li>視覺小說 —「Maid for Loving You」— 日文 → 繁體中文（成人向作品）</li><li>MMORPG 在地化 — 日文 → 中文（NDA）</li><li>配音／台詞腳本校稿 — 日文（NDA）</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">其他</h2>
-        <ul class="bullets"><li>線上日語講師 — Preply — 從會話到日檢 N1 之教學輔導</li><li>雙語內容創作 — 外國勞工經驗、勞動議題與台日文化比較等文章</li></ul>
-      </section>
-      <section class="block">
-        <h2 class="eyebrow">學歷與證照</h2>
-        <ul class="bullets"><li>應用日語系（翻譯組）學士 — 南台科技大學、2012</li><li>早稻田大學 日本語別科 結業（2013–2014）</li><li>日本語能力試驗 JLPT N1 合格</li></ul>
-      </section>
+        </section>
+
+        <section class="block">
+          <h2 class="sec-label">主な実績</h2>
+          <ul class="plain">
+            <li>マンガ・ローカライズ — JES Corporation — 日本語 → 簡体字中国語 — 連載4作品以上・累計200ページ超・2024年以降（成人向けを含む）</li>
+            <li>ノベルゲーム「Maid for Loving You」— 日本語 → 繁体字中国語、全編ローカライズ（18禁）</li>
+            <li>MMORPGローカライズ — 日本語 → 中国語、UI・クエスト・アイテムテキスト（NDA）</li>
+            <li>ボイス台本・セリフ校正 — 日本語（NDA）</li>
+          </ul>
+        </section>
       </div>
 
-      <div class="view" data-view="portfolio" hidden>
-      <section class="block summary-block">
-        <h2 class="eyebrow">作品集</h2>
-        <p class="notice"><span><strong>內含成人向內容 —</strong> 本頁列有成人向（18 禁）作品的在地化實績，標示 <span class="badge">18+</span> 者含性描寫。NDA 案件不揭露客戶與作品名稱。</span></p>
+      <aside class="side">
+        <section class="block">
+          <h2 class="sec-label">語学力</h2>
+          <dl class="facts">
+            <div><dt>中国語</dt><dd>ネイティブ（繁体字・簡体字）</dd></div>
+            <div><dt>日本語</dt><dd>日本語能力試験（JLPT）N1</dd></div>
+            <div><dt>英語</dt><dd>実務レベル</dd></div>
+            <div><dt>翻訳</dt><dd>日本語 → 中国語繁体字（台湾）／簡体字</dd></div>
+            <div><dt>通訳</dt><dd>日中逐次通訳</dd></div>
+          </dl>
+        </section>
+        <section class="block">
+          <h2 class="sec-label">ツール</h2>
+          <ul class="plain">
+            <li>memoQ</li>
+            <li>みんなで翻訳</li>
+            <li>マンガOCR・写植</li>
+          </ul>
+        </section>
+        <section class="block">
+          <h2 class="sec-label">学歴・資格</h2>
+          <div class="edu">
+            <p class="edu-title">南台科技大学</p>
+            <p class="edu-sub">応用日本語学科（翻訳専攻）学士、2012年</p>
+          </div>
+          <div class="edu">
+            <p class="edu-title">早稲田大学</p>
+            <p class="edu-sub">日本語別科 修了、2013年–2014年</p>
+          </div>
+          <div class="edu">
+            <p class="edu-title">日本語能力試験 N1</p>
+            <p class="edu-sub">合格</p>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
 
-        <div class="work">
-          <div class="work-head"><span class="work-title">漫畫在地化 — JES Corporation</span><span class="badge">18+</span></div>
-          <p class="work-spec">日文 → 簡體中文 ／ 連載 4 部以上 ／ 累計 200 頁以上 ／ 2024 – 至今</p>
-          <ul class="bullets"><li>以週為週期持續交付連載作品，包含成人向標題。</li><li>逐作品建立術語表與語域規則，確保跨卷之角色口吻與譯名不飄移。</li><li>負責編輯審稿的往返：逐條檢視意見，提出修正或附理由的維持原譯。</li></ul>
-        </div>
+  <div class="view" id="ja-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" data-view="portfolio" hidden>
+    <section>
+      <h2 class="sec-label">作品集</h2>
+      <p class="notice"><strong>成人向けコンテンツを含みます。</strong> 本ページには成人向け（18禁）作品のローカライズ実績が含まれます。18+ の表示がある案件は性的表現を含みます。NDA案件はクライアント名・作品名を伏せています。シチュエーションボイス台本は対訳サンプルであり、商業案件ではありません。</p>
 
-        <div class="work">
-          <div class="work-head"><span class="work-title">視覺小說 —「Maid for Loving You」</span><span class="badge">18+</span></div>
-          <p class="work-spec">日文 → 繁體中文 ／ 全作在地化</p>
-          <ul class="bullets"><li>為每位角色設計專屬語域，並在所有路線中一致維持。</li><li>整合選項分歧文本，確保同一句台詞不論從哪條路線抵達都是同一個譯法。</li></ul>
-        </div>
+      <article class="work">
+        <h3 class="work-title">マンガ・ローカライズ — JES Corporation <span class="badge badge-adult">18禁含む</span></h3>
+        <p class="work-spec">日本語 → 簡体字中国語 ／ 連載4作品以上 ／ 累計200ページ超 ／ 2024年–現在</p>
+        <ul class="plain">
+          <li>成人向け作品を含む連載タイトルを、週次サイクルで継続納品。</li>
+          <li>作品ごとに用語集と語域ルールを整備し、巻をまたいでもキャラクターの口調と訳名がぶれない状態を維持。</li>
+          <li>編集者チェックの往復に対応。指摘を一件ずつ検討し、修正または根拠を添えた据え置きを回答。</li>
+        </ul>
+      </article>
 
-        <div class="work">
-          <div class="work-head"><span class="work-title">情境語音劇本 — 對譯樣本</span><span class="badge">18+</span></div>
-          <p class="work-spec">日文 → 繁體中文（台灣） ／ 1 場景 ／ 台詞 51 句</p>
-          <ul class="bullets"><li>僅翻譯角色台詞；SE 與演出指示保留日文原文，供音響製作端參照。</li><li>比起逐字忠實，優先確保一口氣說得完的長度與換氣點。</li><li>「♥」與刪節號的位置照原文保留——那同時是演員的節拍與呼吸提示。</li></ul>
-          <p class="work-note">對譯樣本（PDF）可依需求提供。</p>
-        </div>
+      <article class="work">
+        <h3 class="work-title">ノベルゲーム —「Maid for Loving You」 <span class="badge badge-adult">18+</span></h3>
+        <p class="work-spec">日本語 → 繁体字中国語 ／ 全編ローカライズ</p>
+        <ul class="plain">
+          <li>キャラクターごとに語域を設計し、全ルートを通して崩さずに維持。</li>
+          <li>選択肢分岐のテキストを整合させ、どの経路から到達しても同じ台詞が同じ訳になる状態を担保。</li>
+        </ul>
+      </article>
 
-        <div class="work">
-          <div class="work-head"><span class="work-title">MMORPG 在地化</span><span class="badge nda">NDA</span></div>
-          <p class="work-spec">日文 → 中文 ／ UI、任務與道具文本</p>
-          <ul class="bullets"><li>處理大量遊戲文本，跨系統與任務線嚴格統一術語。</li></ul>
-        </div>
+      <article class="work">
+        <h3 class="work-title">シチュエーションボイス台本 <span class="badge">対訳サンプル</span> <span class="badge badge-adult">18+</span></h3>
+        <p class="sample-flag"><strong>対訳サンプル。</strong> ポートフォリオ掲載の対訳サンプルであり、商業案件としての受注実績ではありません。</p>
+        <p class="work-spec">日本語 → 繁体字中国語（台湾） ／ 1シーン ／ セリフ51本</p>
+        <ul class="plain">
+          <li>キャラクターのセリフのみを翻訳し、SE・演出指示は音響側が参照するため原文のまま保持。</li>
+          <li>逐語的な忠実さより、一息で発話できる長さと息継ぎの位置を優先。</li>
+          <li>「♥」や「……」の位置は原文どおりに保持。演技のタイミングと息づかいの指示を兼ねているため。</li>
+        </ul>
+        <p class="work-note">対訳サンプル（PDF）はご請求に応じて提供いたします。</p>
+      </article>
 
-        <div class="work">
-          <div class="work-head"><span class="work-title">配音／台詞腳本校稿</span><span class="badge nda">NDA</span></div>
-          <p class="work-spec">日文單語 ／ 角色語音台詞表</p>
-          <ul class="bullets"><li>以商業出版標準逐句校閱日文語音腳本。</li></ul>
-        </div>
+      <article class="work">
+        <h3 class="work-title">MMORPG ローカライズ <span class="badge badge-muted">NDA</span></h3>
+        <p class="work-spec">日本語 → 中国語 ／ UI・クエスト・アイテムテキスト</p>
+        <ul class="plain">
+          <li>大量のゲームテキストを、システム・クエスト間で用語を統一しながら処理。</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">ボイス台本・セリフ校正 <span class="badge badge-muted">NDA</span></h3>
+        <p class="work-spec">日本語モノリンガル ／ キャラクターボイス台詞表</p>
+        <ul class="plain">
+          <li>日本語のボイス台本を、商業出版基準で一句ずつ校正。</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="block">
+      <h2 class="sec-label">翻訳方針</h2>
+      <ul class="plain">
+        <li>語域を平坦化しない。露骨な原文は露骨なまま、控えめなキャラクターは控えめなまま訳す。</li>
+        <li>原文の文法ではなく読者の言葉で書く。繁体字案件は台湾華語の話し言葉で仕上げ、翻訳調を残さない。</li>
+        <li>制作側の記述には手を入れない。SE・演出指示・タイミング指示は音響／編集の領域として原文を保持。</li>
+        <li>初回から用語集を作る。12巻目でも1巻目と同じ声に聞こえる状態を保つため。</li>
+      </ul>
+    </section>
+  </div>
+</article>
+
+<article class="pane" data-lang="zh" lang="zh-Hant" hidden>
+  <header class="hero">
+    <h1 class="name">郭毓雯<span class="name-sub">Kuo Yuwen · やや</span></h1>
+    <p class="tagline">日文 → 中文 翻譯・口譯</p>
+    <address class="meta">
+      <span>日本熊本縣</span>
+      <a href="mailto:ky.works.jptw@gmail.com">ky.works.jptw@gmail.com</a>
+    </address>
+  </header>
+
+  <div class="view" id="zh-resume" role="tabpanel" aria-labelledby="tab-resume" data-view="resume" hidden>
+    <div class="layout">
+      <section class="profile">
+        <h2 class="sec-label">專業簡介</h2>
+        <p class="summary">中文為母語（繁體、簡體），日本語能力試驗 N1，英文可作實務溝通。日中翻譯與口譯的實務經驗六年以上，範圍包含漫畫、視覺小說、遊戲等創作領域，以及半導體、建設等技術領域。繁體中文以自然的台灣華語書寫，並在全篇維持各角色的語氣與語域。可承接成人向（18禁）作品。</p>
+        <p class="summary">自 2014 年起以自由接案從事日文 → 中文翻譯與口譯。2026 年 6 月起於 BlueMeme 擔任正職營業，因此翻譯工作以平日晚間及週末為主。</p>
       </section>
 
-      <section class="block">
-        <h2 class="eyebrow">翻譯原則</h2>
-        <ul class="bullets"><li>不把語域拉平。露骨的原文就譯得露骨，含蓄的角色就保持含蓄。</li><li>照讀者的語言寫，不照原文的文法寫。繁體案件以台灣華語口語完成，不留翻譯腔。</li><li>不動製作端的標記。SE、演出指示與節拍提示屬於音響與編輯的範圍，一律保留原文。</li><li>第一頁就開始建術語表，讓第十二卷聽起來仍然是第一卷的那個聲音。</li></ul>
-      </section>
+      <div class="main-col">
+        <section class="block">
+          <h2 class="sec-label">工作經歷</h2>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">自由接案翻譯・口譯</h3>
+              <p class="role-dates">2014年 – 至今</p>
+            </div>
+            <p class="role-org">日本／遠端</p>
+            <ul class="plain">
+              <li>承接漫畫、視覺小說與遊戲之日文 → 中文（繁體、簡體）翻譯與在地化。</li>
+              <li>依專案進行半導體與建設領域之逐步口譯。</li>
+              <li>為各作品建立術語表與風格指南，維持譯名與語氣一致。</li>
+            </ul>
+          </div>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">營業</h3>
+              <p class="role-dates">2026年6月 – 至今</p>
+            </div>
+            <p class="role-org">BlueMeme 股份有限公司（熊本）</p>
+            <ul class="plain">
+              <li>正職。翻譯工作以平日晚間及週末為主。</li>
+            </ul>
+          </div>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">建設口譯・翻譯</h3>
+              <p class="role-dates">2017年以降</p>
+            </div>
+            <p class="role-org">大和ハウス・清水建設・大成建設（台灣）</p>
+            <ul class="plain">
+              <li>於上述公司之專案擔任口譯與筆譯，處理技術文件與現場會議。</li>
+            </ul>
+          </div>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">其他口譯</h3>
+              <p class="role-dates">專案制</p>
+            </div>
+            <p class="role-org">JASM · 豊工務店 · JUcan</p>
+            <ul class="plain">
+              <li>為製造與建設客戶提供現場及專案口譯。</li>
+            </ul>
+          </div>
+
+          <div class="role">
+            <div class="role-top">
+              <h3 class="role-title">線上日語講師</h3>
+            </div>
+            <p class="role-org">Preply</p>
+            <ul class="plain">
+              <li>從會話到日檢 N1。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2 class="sec-label">主要作品</h2>
+          <ul class="plain">
+            <li>漫畫在地化 — JES Corporation — 日文 → 簡體中文 — 連載 4 部以上、累計 200 頁以上、2024年起（含成人向）</li>
+            <li>視覺小說「Maid for Loving You」— 日文 → 繁體中文，全作在地化（18禁）</li>
+            <li>MMORPG 在地化 — 日文 → 中文，UI、任務與道具文本（NDA）</li>
+            <li>配音／台詞腳本校稿 — 日文（NDA）</li>
+          </ul>
+        </section>
       </div>
-    </article>
 
-  </main>
+      <aside class="side">
+        <section class="block">
+          <h2 class="sec-label">語言能力</h2>
+          <dl class="facts">
+            <div><dt>中文</dt><dd>母語（繁體、簡體）</dd></div>
+            <div><dt>日文</dt><dd>日本語能力試驗（JLPT）N1</dd></div>
+            <div><dt>英文</dt><dd>實務溝通</dd></div>
+            <div><dt>筆譯</dt><dd>日文 → 繁體中文（台灣）／簡體中文</dd></div>
+            <div><dt>口譯</dt><dd>日中逐步口譯</dd></div>
+          </dl>
+        </section>
+        <section class="block">
+          <h2 class="sec-label">工具</h2>
+          <ul class="plain">
+            <li>memoQ</li>
+            <li>みんなで翻訳（共同翻譯）</li>
+            <li>漫畫 OCR 與嵌字</li>
+          </ul>
+        </section>
+        <section class="block">
+          <h2 class="sec-label">學歷與證照</h2>
+          <div class="edu">
+            <p class="edu-title">南台科技大學</p>
+            <p class="edu-sub">應用日語系（翻譯組）學士，2012年</p>
+          </div>
+          <div class="edu">
+            <p class="edu-title">早稻田大學</p>
+            <p class="edu-sub">日本語別科，2013–2014年</p>
+          </div>
+          <div class="edu">
+            <p class="edu-title">日本語能力試驗 N1</p>
+            <p class="edu-sub">合格</p>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <div class="view" id="zh-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" data-view="portfolio" hidden>
+    <section>
+      <h2 class="sec-label">作品集</h2>
+      <p class="notice"><strong>內含成人向內容。</strong> 本頁列有成人向（18禁）作品的在地化實績。標示 18+ 者含性描寫。NDA 案件不揭露客戶與作品名稱。情境語音劇本為對譯樣本，並非商業委託。</p>
+
+      <article class="work">
+        <h3 class="work-title">漫畫在地化 — JES Corporation <span class="badge badge-adult">含18禁</span></h3>
+        <p class="work-spec">日文 → 簡體中文 ／ 連載 4 部以上 ／ 累計 200 頁以上 ／ 2024年 – 至今</p>
+        <ul class="plain">
+          <li>以週為週期持續交付連載作品，包含成人向標題。</li>
+          <li>逐作品建立術語表與語域規則，確保跨卷之角色口吻與譯名不飄移。</li>
+          <li>負責編輯審稿的往返：逐條檢視意見，提出修正或附理由的維持原譯。</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">視覺小說 —「Maid for Loving You」 <span class="badge badge-adult">18+</span></h3>
+        <p class="work-spec">日文 → 繁體中文 ／ 全作在地化</p>
+        <ul class="plain">
+          <li>為每位角色設計專屬語域，並在所有路線中一致維持。</li>
+          <li>整合選項分歧文本，確保同一句台詞不論從哪條路線抵達都是同一個譯法。</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">情境語音劇本 <span class="badge">對譯樣本</span> <span class="badge badge-adult">18+</span></h3>
+        <p class="sample-flag"><strong>對譯樣本。</strong> 此為作品集刊登的對譯樣本，並非商業案件的接案實績。</p>
+        <p class="work-spec">日文 → 繁體中文（台灣） ／ 1 場景 ／ 台詞 51 句</p>
+        <ul class="plain">
+          <li>僅翻譯角色台詞；SE 與演出指示保留日文原文，供音響製作端參照。</li>
+          <li>比起逐字忠實，優先確保一口氣說得完的長度與換氣點。</li>
+          <li>「♥」與刪節號的位置照原文保留——那同時是演員的節拍與呼吸提示。</li>
+        </ul>
+        <p class="work-note">對譯樣本（PDF）可依需求提供。</p>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">MMORPG 在地化 <span class="badge badge-muted">NDA</span></h3>
+        <p class="work-spec">日文 → 中文 ／ UI、任務與道具文本</p>
+        <ul class="plain">
+          <li>處理大量遊戲文本，跨系統與任務線嚴格統一術語。</li>
+        </ul>
+      </article>
+
+      <article class="work">
+        <h3 class="work-title">配音／台詞腳本校稿 <span class="badge badge-muted">NDA</span></h3>
+        <p class="work-spec">日文單語 ／ 角色語音台詞表</p>
+        <ul class="plain">
+          <li>以商業出版標準逐句校閱日文語音腳本。</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="block">
+      <h2 class="sec-label">翻譯原則</h2>
+      <ul class="plain">
+        <li>不把語域拉平。露骨的原文就譯得露骨，含蓄的角色就保持含蓄。</li>
+        <li>照讀者的語言寫，不照原文的文法寫。繁體案件以台灣華語口語完成，不留翻譯腔。</li>
+        <li>不動製作端的標記。SE、演出指示與節拍提示屬於音響與編輯的範圍，一律保留原文。</li>
+        <li>第一頁就開始建術語表，讓第十二卷聽起來仍然是第一卷的那個聲音。</li>
+      </ul>
+    </section>
+  </div>
+</article>
+
+</main>
 <script>
-(function(){
-  var langBtns = Array.prototype.slice.call(document.querySelectorAll('[data-set-lang]'));
-  var viewBtns = Array.prototype.slice.call(document.querySelectorAll('[data-set-view]'));
-  var panes = Array.prototype.slice.call(document.querySelectorAll('.pane'));
+(function () {
+  var LANGS = ["en", "ja", "zh"];
+  var VIEWS = ["resume", "portfolio"];
+  var langButtons = Array.prototype.slice.call(document.querySelectorAll("[data-set-lang]"));
+  var viewButtons = Array.prototype.slice.call(document.querySelectorAll("[data-set-view]"));
+  var panes = Array.prototype.slice.call(document.querySelectorAll(".pane"));
+  var live = document.getElementById("live");
+  var skip = document.querySelector(".skip");
   var titles = {
-    "en":{"resume":"Kuo Yuwen — Japanese ⇄ Chinese Translator & Interpreter","portfolio":"Kuo Yuwen — Portfolio"},
-    "ja":{"resume":"郭毓雯 — 日中翻訳・通訳","portfolio":"郭毓雯 — 作品集"},
-    "zh":{"resume":"郭毓雯 — 日中翻譯・口譯","portfolio":"郭毓雯 — 作品集"}
+    en: { resume: "Kuo Yuwen — Japanese → Chinese Translator", portfolio: "Kuo Yuwen — Portfolio" },
+    ja: { resume: "郭毓雯 — 日中翻訳・通訳", portfolio: "郭毓雯 — 作品集" },
+    zh: { resume: "郭毓雯 — 日中翻譯・口譯", portfolio: "郭毓雯 — 作品集" }
   };
-  var state = {lang:"en", view:"resume"};
+  var descriptions = {
+    en: "Kuo Yuwen (郭毓雯), Japanese to Chinese translator and interpreter in Kumamoto. Manga, games, and technical interpreting.",
+    ja: "郭毓雯（Kuo Yuwen）。熊本在住の日中翻訳者・通訳者。マンガ、ゲーム、技術通訳。",
+    zh: "郭毓雯（Kuo Yuwen），日文→中文翻譯與口譯。熊本。漫畫、遊戲與技術口譯。"
+  };
+  var announced = {
+    en: { resume: "English resume", portfolio: "English portfolio" },
+    ja: { resume: "日本語の経歴", portfolio: "日本語の作品集" },
+    zh: { resume: "繁體中文經歷", portfolio: "繁體中文作品集" }
+  };
+  var htmlLang = { en: "en", ja: "ja", zh: "zh-Hant" };
+  var state = { lang: "en", view: "resume" };
+  var booted = false;
 
-  function apply(){
-    panes.forEach(function(p){
-      var on = p.getAttribute('data-lang') === state.lang;
-      p.classList.toggle('is-active', on);
-      if(on){ p.removeAttribute('hidden'); } else { p.setAttribute('hidden',''); }
-      Array.prototype.slice.call(p.querySelectorAll('.view')).forEach(function(v){
-        if(v.getAttribute('data-view') === state.view){ v.removeAttribute('hidden'); }
-        else { v.setAttribute('hidden',''); }
-      });
-      if(on){ p.style.animation='none'; void p.offsetWidth; p.style.animation=''; }
-    });
-    langBtns.forEach(function(b){
-      var on = b.getAttribute('data-set-lang') === state.lang;
-      b.classList.toggle('is-active', on);
-      b.setAttribute('aria-pressed', on ? 'true':'false');
-    });
-    viewBtns.forEach(function(b){
-      var on = b.getAttribute('data-set-view') === state.view;
-      b.classList.toggle('is-active', on);
-      b.setAttribute('aria-pressed', on ? 'true':'false');
-      var label = b.getAttribute('data-label-' + state.lang);
-      if(label){ b.textContent = label; }
-    });
-    document.documentElement.setAttribute('lang', state.lang);
-    var t = titles[state.lang] && titles[state.lang][state.view];
-    if(t){ document.title = t; }
-    if(history.replaceState){
-      history.replaceState(null, '', '#' + state.lang + '/' + state.view);
-    }
+  function readHash() {
+    var parts = (location.hash || "").replace(/^#/, "").split("/");
+    return {
+      lang: LANGS.indexOf(parts[0]) >= 0 ? parts[0] : null,
+      view: VIEWS.indexOf(parts[1]) >= 0 ? parts[1] : null
+    };
   }
 
-  langBtns.forEach(function(b){
-    b.addEventListener('click', function(){ state.lang = b.getAttribute('data-set-lang'); apply(); });
-  });
-  viewBtns.forEach(function(b){
-    b.addEventListener('click', function(){ state.view = b.getAttribute('data-set-view'); apply(); });
+  function labelFor(el, lang) {
+    return el.getAttribute("data-label-" + lang);
+  }
+
+  function apply(announce) {
+    panes.forEach(function (pane) {
+      var on = pane.getAttribute("data-lang") === state.lang;
+      pane.toggleAttribute("hidden", !on);
+      Array.prototype.forEach.call(pane.querySelectorAll(".view"), function (view) {
+        view.toggleAttribute("hidden", view.getAttribute("data-view") !== state.view);
+      });
+    });
+    langButtons.forEach(function (btn) {
+      var on = btn.getAttribute("data-set-lang") === state.lang;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+      btn.tabIndex = on ? 0 : -1;
+    });
+    viewButtons.forEach(function (btn) {
+      var view = btn.getAttribute("data-set-view");
+      var on = view === state.view;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+      btn.tabIndex = on ? 0 : -1;
+      btn.setAttribute("aria-controls", state.lang + "-" + view);
+      var label = labelFor(btn, state.lang);
+      if (label) btn.textContent = label;
+    });
+    document.querySelectorAll("[data-label-en]").forEach(function (el) {
+      if (el.hasAttribute("data-set-view")) return;
+      var label = labelFor(el, state.lang);
+      if (!label) return;
+      if (el.classList.contains("skip")) el.textContent = label;
+      else el.setAttribute("aria-label", label);
+    });
+    document.documentElement.lang = htmlLang[state.lang];
+    document.title = titles[state.lang][state.view];
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", descriptions[state.lang]);
+    try { localStorage.setItem("resume-pref", state.lang + "/" + state.view); } catch (e) {}
+    if (history.replaceState) history.replaceState(null, "", "#" + state.lang + "/" + state.view);
+    if (announce && live) live.textContent = announced[state.lang][state.view];
+  }
+
+  function cycle(list, current, key) {
+    if (key === "Home") return list[0];
+    if (key === "End") return list[list.length - 1];
+    var delta = key === "ArrowRight" || key === "ArrowDown" ? 1 : key === "ArrowLeft" || key === "ArrowUp" ? -1 : 0;
+    if (!delta) return null;
+    var i = list.indexOf(current);
+    return list[(i + delta + list.length) % list.length];
+  }
+
+  langButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      state.lang = btn.getAttribute("data-set-lang");
+      apply(true);
+    });
+    btn.addEventListener("keydown", function (e) {
+      var next = cycle(LANGS, state.lang, e.key);
+      if (!next) return;
+      e.preventDefault();
+      state.lang = next;
+      apply(true);
+      var target = document.querySelector('[data-set-lang="' + next + '"]');
+      if (target) target.focus();
+    });
   });
 
-  var h = (location.hash || '').replace('#','').split('/');
-  if(h[0] === 'en' || h[0] === 'ja' || h[0] === 'zh'){ state.lang = h[0]; }
-  if(h[1] === 'resume' || h[1] === 'portfolio'){ state.view = h[1]; }
-  apply();
+  viewButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      state.view = btn.getAttribute("data-set-view");
+      apply(true);
+    });
+    btn.addEventListener("keydown", function (e) {
+      var next = cycle(VIEWS, state.view, e.key);
+      if (!next) return;
+      e.preventDefault();
+      state.view = next;
+      apply(true);
+      var target = document.querySelector('[data-set-view="' + next + '"]');
+      if (target) target.focus();
+    });
+  });
+
+  var hash = readHash();
+  if (hash.lang || hash.view) {
+    if (hash.lang) state.lang = hash.lang;
+    if (hash.view) state.view = hash.view;
+  } else {
+    try {
+      var stored = (localStorage.getItem("resume-pref") || "").split("/");
+      if (LANGS.indexOf(stored[0]) >= 0) state.lang = stored[0];
+      if (VIEWS.indexOf(stored[1]) >= 0) state.view = stored[1];
+    } catch (e) {}
+  }
+  apply(false);
+  booted = true;
+
+  window.addEventListener("hashchange", function () {
+    var next = readHash();
+    if (next.lang) state.lang = next.lang;
+    if (next.view) state.view = next.view;
+    apply(false);
+  });
 })();
 </script>
 </body>
